@@ -1,4 +1,4 @@
-package newCache
+package newcache
 
 import (
 	"errors"
