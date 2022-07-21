@@ -1,5 +1,6 @@
 package newcache
 
+//newlib
 import (
 	"errors"
 )
