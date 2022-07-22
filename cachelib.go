@@ -22,7 +22,7 @@ func (c Cache) Set(key string, value interface{}) {
 func (c Cache) Get(key string) (interface{}, error) {
 	_, ok := c.cache[key]
 	if !ok {
-		return nil, errors.New("key not found")
+		return nil, errors.New("data not found")
 	}
 	return c.cache[key], nil
 }
@@ -30,7 +30,7 @@ func (c Cache) Get(key string) (interface{}, error) {
 func (c Cache) Delete(key string) error {
 	_, ok := c.cache[key]
 	if !ok {
-		return errors.New("key not found")
+		return errors.New("data not found")
 	}
 	delete(c.cache, key)
 	return nil
