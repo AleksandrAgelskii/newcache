@@ -22,8 +22,7 @@ func (c *Cache) Set(key string, value interface{}, ttl time.Duration) {
 	defer c.Unlock()
 	c.cache[key] = value
 	go func() {
-		t := time.NewTimer(ttl)
-		<-t.C
+		<-time.NewTimer(ttl).C
 		c.Delete(key)
 	}()
 }
