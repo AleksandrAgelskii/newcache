@@ -3,23 +3,29 @@ package newcache
 import (
 	"errors"
 	"sync"
+	"time"
 )
 
 type Cache struct {
-	*sync.RWMutex
+	sync.RWMutex
 	cache map[string]interface{}
 }
 
-func New() *Cache {
+func NewCache() *Cache {
 	return &Cache{
 		cache: make(map[string]interface{}),
 	}
 }
 
-func (c *Cache) Set(key string, value interface{}) {
+func (c *Cache) Set(key string, value interface{}, ttl time.Duration) {
 	c.Lock()
 	defer c.Unlock()
 	c.cache[key] = value
+	go func() {
+		t := time.NewTimer(ttl)
+		<-t.C
+		c.Delete(key)
+	}()
 }
 
 func (c *Cache) Get(key string) (interface{}, error) {
